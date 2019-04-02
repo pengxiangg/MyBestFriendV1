@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,10 +18,12 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
 
     class ChatViewHolder extends RecyclerView.ViewHolder {
         private final TextView chatItemView;
+        private final ImageView cornerImageView;
 
         private ChatViewHolder(View itemView) {
             super(itemView);
             chatItemView = itemView.findViewById(R.id.textView);
+            cornerImageView = itemView.findViewById(R.id.corner_view);
         }
     }
 
@@ -40,14 +43,21 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
         if (mChats != null) {
             Chat current = mChats.get(position);
             holder.chatItemView.setText(current.getMessage());
-            if(position>0) {
-                Chat previousChat = mChats.get(position-1);
-                String previousUser = previousChat.getUser();
+
+            if(position==mChats.size()-1){
+                holder.chatItemView.setBackgroundResource(R.drawable.chat_bubble_v2);
+                holder.cornerImageView.setVisibility(View.VISIBLE);
+            }
+            else if(position>=0&&position<mChats.size()-1) {
+                Chat nextChat = mChats.get(position+1);
+                String nextUser = nextChat.getUser();
                 String currentUser = current.getUser();
-                if(previousUser.equals(currentUser)){
+                if(nextUser.equals(currentUser)){
+                    holder.cornerImageView.setVisibility(View.INVISIBLE);
                     holder.chatItemView.setBackgroundResource(R.drawable.chat_bubble);
                 } else {
-                    holder.chatItemView.setBackgroundResource(R.drawable.rounded_edittext);
+                    holder.cornerImageView.setVisibility(View.VISIBLE);
+                    holder.chatItemView.setBackgroundResource(R.drawable.chat_bubble_v2);
                 }
             }
         } else {
