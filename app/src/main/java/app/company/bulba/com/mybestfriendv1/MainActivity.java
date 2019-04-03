@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
                     } else {
                         Log.e("Test: ", "NOT shown");
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                     }
                 }
                 return false;
