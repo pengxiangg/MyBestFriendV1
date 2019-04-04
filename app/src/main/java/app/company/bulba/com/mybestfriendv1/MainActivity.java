@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final ChatListAdapter adapter = new ChatListAdapter(this);
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<Chat> chats) {
 
                 adapter.setChats(chats);
-                //recyclerView.scrollToPosition(adapter.getItemCount()-1);
+                recyclerView.scrollToPosition(adapter.getItemCount()-1);
             }
         });
 
@@ -66,16 +65,12 @@ public class MainActivity extends AppCompatActivity {
         editText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                Log.e("First: ", "Open");
                 if (adapter.getItemCount() >= 0) {
                     View test = recyclerView.getLayoutManager().findViewByPosition(adapter.getItemCount()-1);
                     if(test!=null) {
-                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                         isLastItem = true;
                     }
                     else {
-                        Log.e("Test: ", "NOT shown");
-                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                         isLastItem = false;
                     }
                 }
@@ -101,5 +96,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //TODO: if position of screen at bottom, push view up when keyboard is open, else if not at bottom, overlap
 }

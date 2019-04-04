@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true"
     tools:context="app.company.bulba.com.mybestfriendv1.MainActivity">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -18,35 +14,35 @@
         android:background="@color/colorAccent"
         tools:listitem="@layout/recyclerview_item" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout"
-        android:background="@color/colorAccent">
+        android:layout_alignParentStart="true"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        android:padding="4dp">
 
         <EditText
             android:id="@+id/chat_box"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_edittext"
-            android:layout_margin="10dp" />
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_margin="4dp"
+            android:layout_toStartOf="@+id/send_button"
+            android:background="@drawable/rounded_edittext" />
 
         <Button
             android:id="@+id/send_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/round_button"
-            android:layout_margin="4dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@android:color/darker_gray"
-            android:layout_alignParentBottom="true"/>
-    </LinearLayout>
+            android:layout_alignParentRight="true"
+            android:layout_margin="4dp"
+            android:background="@drawable/round_button" />
+
+    </RelativeLayout>
 
 
 
 </RelativeLayout>
-</ScrollView>
