@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
     tools:context="app.company.bulba.com.mybestfriendv1.MainActivity">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -18,17 +22,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:id="@+id/linearLayout"
         android:background="@color/colorAccent">
 
         <EditText
             android:id="@+id/chat_box"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_edittext"
-            android:layout_margin="8dp"
-            android:layout_weight="1"/>
+            android:layout_margin="10dp" />
 
         <Button
             android:id="@+id/send_button"
@@ -36,7 +39,14 @@
             android:layout_height="40dp"
             android:background="@drawable/round_button"
             android:layout_margin="4dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@android:color/darker_gray"
+            android:layout_alignParentBottom="true"/>
     </LinearLayout>
 
 
+
 </RelativeLayout>
+</ScrollView>

@@ -1,5 +1,6 @@
 package app.company.bulba.com.mybestfriendv1;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
@@ -19,7 +20,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ChatViewModel mChatViewModel;
+    private boolean isLastItem = false;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 String message = editText.getText().toString();
                 String user = "me";
                 long unixTime = System.currentTimeMillis()/1000L;
-                if(message != null) {
-                    Chat chat = new Chat(message, user, unixTime);
-                    mChatViewModel.insert(chat);
-                    editText.getText().clear();
-                }
+                Chat chat = new Chat(message, user, unixTime);
+                mChatViewModel.insert(chat);
+                editText.getText().clear();
             }
         });
 
@@ -68,16 +69,36 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("First: ", "Open");
                 if (adapter.getItemCount() >= 0) {
                     View test = recyclerView.getLayoutManager().findViewByPosition(adapter.getItemCount()-1);
-                    if(test!=null){
-                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-                    } else {
+                    if(test!=null) {
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                        isLastItem = true;
+                    }
+                    else {
                         Log.e("Test: ", "NOT shown");
                         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                        isLastItem = false;
                     }
                 }
                 return false;
             }
         });
+
+        recyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right,int bottom, int oldLeft, int oldTop,int oldRight, int oldBottom)
+            {
+                if ( bottom < oldBottom && isLastItem == true) {
+                    recyclerView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.scrollToPosition(adapter.getItemCount()-1);
+                        }
+                    }, 0);
+                }
+            }
+        });
+
+
     }
 
     //TODO: if position of screen at bottom, push view up when keyboard is open, else if not at bottom, overlap
