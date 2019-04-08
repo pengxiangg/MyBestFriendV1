@@ -4,6 +4,10 @@ import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,81 +23,41 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ChatViewModel mChatViewModel;
-    private boolean isLastItem = false;
+    FragmentPagerAdapter adapterViewPager;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        pager.setAdapter(adapterViewPager);
 
+    }
 
-        final RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final ChatListAdapter adapter = new ChatListAdapter(this);
-        recyclerView.setAdapter(adapter);
+    public static class MyPagerAdapter extends FragmentPagerAdapter {
+        private static int NUM_ITEMS = 2;
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        public MyPagerAdapter(FragmentManager fragmentManager){
+            super(fragmentManager);
+        }
 
-        mChatViewModel = ViewModelProviders.of(this).get(ChatViewModel.class);
-        mChatViewModel.getAllChats().observe(this, new Observer<List<Chat>>() {
-            @Override
-            public void onChanged(@Nullable List<Chat> chats) {
-
-                adapter.setChats(chats);
-                recyclerView.scrollToPosition(adapter.getItemCount()-1);
+        @Override
+        public Fragment getItem(int position) {
+            switch (position){
+                case 0:
+                    return new FirstFragment();
+                case 1:
+                    return new SecondFragment();
+                default:
+                    return null;
             }
-        });
+        }
 
-        final EditText editText = (EditText) findViewById(R.id.chat_box);
-
-        Button button = (Button) findViewById(R.id.send_button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String message = editText.getText().toString();
-                String user = "me";
-                long unixTime = System.currentTimeMillis()/1000L;
-                Chat chat = new Chat(message, user, unixTime);
-                mChatViewModel.insert(chat);
-                editText.getText().clear();
-            }
-        });
-
-
-        editText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (adapter.getItemCount() >= 0) {
-                    View test = recyclerView.getLayoutManager().findViewByPosition(adapter.getItemCount()-1);
-                    if(test!=null) {
-                        isLastItem = true;
-                    }
-                    else {
-                        isLastItem = false;
-                    }
-                }
-                return false;
-            }
-        });
-
-        recyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right,int bottom, int oldLeft, int oldTop,int oldRight, int oldBottom)
-            {
-                if ( bottom < oldBottom && isLastItem == true) {
-                    recyclerView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            recyclerView.scrollToPosition(adapter.getItemCount()-1);
-                        }
-                    }, 0);
-                }
-            }
-        });
-
-
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
     }
 
 }

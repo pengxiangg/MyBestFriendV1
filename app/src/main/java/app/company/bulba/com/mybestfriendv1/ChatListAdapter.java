@@ -2,10 +2,13 @@ package app.company.bulba.com.mybestfriendv1;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -18,17 +21,25 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
 
     class ChatViewHolder extends RecyclerView.ViewHolder {
         private final TextView chatItemView;
-        private final ImageView cornerImageView;
+        private final ImageView cornerRightImageView;
+        private final ImageView cornerLeftImageView;
+        private final LinearLayout fullItemView;
 
         private ChatViewHolder(View itemView) {
             super(itemView);
             chatItemView = itemView.findViewById(R.id.textView);
-            cornerImageView = itemView.findViewById(R.id.corner_view);
+            cornerRightImageView = itemView.findViewById(R.id.corner_view_right);
+            cornerLeftImageView = itemView.findViewById(R.id.corner_view_left);
+            fullItemView = itemView.findViewById(R.id.full);
         }
     }
 
+    //TODO: getView method??
+
     private final LayoutInflater mInflater;
     private List<Chat> mChats;
+    private final String ownerMe = "OWNER_ME";
+    private final String ownerBF = "OWNER_BEST_FRIEND";
 
     ChatListAdapter(Context context) {mInflater = LayoutInflater.from(context);}
 
@@ -43,26 +54,59 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
         if (mChats != null) {
             Chat current = mChats.get(position);
             holder.chatItemView.setText(current.getMessage());
+            String owner = current.getUser();
 
-            if(position==mChats.size()-1){
-                holder.chatItemView.setBackgroundResource(R.drawable.chat_bubble_v2);
-                holder.cornerImageView.setVisibility(View.VISIBLE);
-            }
-            else if(position>=0&&position<mChats.size()-1) {
-                Chat nextChat = mChats.get(position+1);
-                String nextUser = nextChat.getUser();
-                String currentUser = current.getUser();
-                if(nextUser.equals(currentUser)){
-                    holder.cornerImageView.setVisibility(View.INVISIBLE);
-                    holder.chatItemView.setBackgroundResource(R.drawable.chat_bubble);
-                } else {
-                    holder.cornerImageView.setVisibility(View.VISIBLE);
+            if (owner.equals(ownerMe)) {
+                RelativeLayout.LayoutParams paramsRight = (RelativeLayout.LayoutParams) holder.fullItemView.getLayoutParams();
+                paramsRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+                holder.fullItemView.setLayoutParams(paramsRight);
+
+                if (position == mChats.size() - 1) {
                     holder.chatItemView.setBackgroundResource(R.drawable.chat_bubble_v2);
+                    holder.cornerRightImageView.setVisibility(View.VISIBLE);
+                    holder.cornerLeftImageView.setVisibility(View.GONE);
+                } else if (position >= 0 && position < mChats.size() - 1) {
+                    String nextUser = mChats.get(position + 1).getUser();
+                    String currentUser = current.getUser();
+
+                    if (currentUser.equals(nextUser)) {
+                        holder.chatItemView.setBackgroundResource(R.drawable.chat_bubble);
+                        holder.cornerRightImageView.setVisibility(View.INVISIBLE);
+                        holder.cornerLeftImageView.setVisibility(View.GONE);
+                    } else {
+                        holder.chatItemView.setBackgroundResource(R.drawable.chat_bubble_v2);
+                        holder.cornerRightImageView.setVisibility(View.VISIBLE);
+                        holder.cornerLeftImageView.setVisibility(View.GONE);
+                    }
                 }
+
+            } else if (owner.equals(ownerBF)) {
+                RelativeLayout.LayoutParams paramsLeft = (RelativeLayout.LayoutParams) holder.fullItemView.getLayoutParams();
+                paramsLeft.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+                holder.fullItemView.setLayoutParams(paramsLeft);
+
+                if (position == mChats.size() - 1) {
+                    holder.chatItemView.setBackgroundResource(R.drawable.chat_bubble_v3);
+                    holder.cornerRightImageView.setVisibility(View.GONE);
+                    holder.cornerLeftImageView.setVisibility(View.VISIBLE);
+                } else if (position >= 0 && position < mChats.size() - 1) {
+                    String nextUser = mChats.get(position + 1).getUser();
+                    String currentUser = current.getUser();
+
+                    if (currentUser.equals(nextUser)) {
+                        holder.chatItemView.setBackgroundResource(R.drawable.chat_bubble);
+                        holder.cornerRightImageView.setVisibility(View.GONE);
+                        holder.cornerLeftImageView.setVisibility(View.INVISIBLE);
+                    } else {
+                        holder.chatItemView.setBackgroundResource(R.drawable.chat_bubble_v3);
+                        holder.cornerRightImageView.setVisibility(View.GONE);
+                        holder.cornerLeftImageView.setVisibility(View.VISIBLE);
+                    }
+                }
+            } else {
+                // Covers the case of data not being ready yet.
+                holder.chatItemView.setText("No Word");
             }
-        } else {
-            // Covers the case of data not being ready yet.
-            holder.chatItemView.setText("No Word");
         }
     }
 
