@@ -1,35 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/full"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:layout_alignParentRight="true">
+    <ImageView
+        android:id="@+id/corner_view_right"
+        android:layout_width="8dp"
+        android:layout_height="16dp"
+        android:background="@drawable/corner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-
-    <TextView
-        android:id="@+id/textView"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/chat_bubble"
-        android:layout_centerInParent="true"
-        android:text="Hello World"
-        android:paddingTop="1dp"
-        android:paddingBottom="1dp"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"/>
+        app:layout_constraintEnd_toStartOf="@+id/corner_view_right"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:maxWidth="240dp"
+            android:text="fgdsgfgsdo"
+            android:textColor="#000000"
+            android:layout_marginTop="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/corner_view_right"
-            android:layout_width="8dp"
-            android:layout_height="16dp"
-            android:background="@drawable/corner" />
-    </LinearLayout>
+        <TextView
+            android:id="@+id/text_message_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="11:40"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/textView" />
+    </android.support.constraint.ConstraintLayout>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
