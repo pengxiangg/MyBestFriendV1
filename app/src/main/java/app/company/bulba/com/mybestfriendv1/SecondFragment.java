@@ -30,7 +30,6 @@ public class SecondFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.second_fragment, container, false);
-        getActivity().setTitle("Test BEST FRIEND");
 
         final RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         final ChatListAdapter adapter = new ChatListAdapter(getContext());

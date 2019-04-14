@@ -2,6 +2,7 @@ package app.company.bulba.com.mybestfriendv1;
 
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,17 +93,21 @@ public class ChatListAdapter extends RecyclerView.Adapter {
     class MeMessageHolder extends RecyclerView.ViewHolder {
         private final TextView chatItemView;
         private final ImageView cornerRightIImageView;
+        private final ConstraintLayout constraintLayout;
+
 
         private MeMessageHolder(View itemView) {
             super(itemView);
             chatItemView = itemView.findViewById(R.id.textView);
             cornerRightIImageView = itemView.findViewById(R.id.corner_view_right);
+            constraintLayout = itemView.findViewById(R.id.chat_bubble_id);
+
         }
 
         void bind(Chat chat, boolean isCorner) {
             chatItemView.setText(chat.getMessage());
             if(isCorner) {
-                chatItemView.setBackgroundResource(R.drawable.chat_bubble_v2);
+                constraintLayout.setBackgroundResource(R.drawable.chat_bubble_v2);
             } else {
                 cornerRightIImageView.setVisibility(View.INVISIBLE);
             }
@@ -112,17 +117,19 @@ public class ChatListAdapter extends RecyclerView.Adapter {
     class BfMessageHolder extends RecyclerView.ViewHolder {
         private final TextView chatItemView;
         private final ImageView cornerLeftImageView;
+        private final ConstraintLayout constraintLayout;
 
         private BfMessageHolder(View itemView) {
             super(itemView);
             chatItemView = itemView.findViewById(R.id.textView);
             cornerLeftImageView = itemView.findViewById(R.id.corner_view_left);
+            constraintLayout = itemView.findViewById(R.id.chat_bubble_id);
         }
 
         void bind(Chat chat, boolean isCorner) {
             chatItemView.setText(chat.getMessage());
             if(isCorner) {
-                chatItemView.setBackgroundResource(R.drawable.chat_bubble_v3);
+                constraintLayout.setBackgroundResource(R.drawable.chat_bubble_v3);
             } else {
                 cornerLeftImageView.setVisibility(View.INVISIBLE);
             }
