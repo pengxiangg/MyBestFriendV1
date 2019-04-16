@@ -46,7 +46,7 @@ public class SecondFragment extends Fragment {
             }
         });
 
-        final EditText editText = (EditText) view.findViewById(R.id.chat_box);
+        final EditText editText = (EditText) view.findViewById(R.id.chat_box_second);
 
         Button button = (Button) view.findViewById(R.id.send_button);
 

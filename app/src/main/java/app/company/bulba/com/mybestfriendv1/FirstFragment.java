@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,7 +47,7 @@ public class FirstFragment extends Fragment {
            }
        });
 
-       final EditText editText = (EditText) view.findViewById(R.id.chat_box);
+       final EditText editText = (EditText) view.findViewById(R.id.chat_box_first);
 
        Button button = (Button) view.findViewById(R.id.send_button);
 
@@ -94,5 +95,18 @@ public class FirstFragment extends Fragment {
 
        return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("First Fragment", "Resume" );
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("First Fragment", "Pause");
+    }
+
 
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("To: My Best Friend");
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        final ViewGroup rootView = (ViewGroup) ((ViewGroup) this.findViewById(R.id.root_view)).getChildAt(0);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -43,8 +47,52 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 if(position==0){
                     setTitle("To: My Best Friend");
+                    rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                                @Override
+                                public void onGlobalLayout() {
+
+                                    Rect r = new Rect();
+                                    rootView.getWindowVisibleDisplayFrame(r);
+                                    int screenHeight = rootView.getRootView().getHeight();
+
+                                    int keypadHeight = screenHeight - r.bottom;
+
+                                    Log.d("Main Activity 0:", "KeypadHeight = " + keypadHeight);
+
+                                    if(keypadHeight > screenHeight * 0.15) {
+                                        Log.d("Position 0: ", "Open");
+                                        EditText editTextFirst = (EditText) findViewById(R.id.chat_box_first);
+                                        editTextFirst.requestFocus();
+                                        Log.d("Chat Box First: ", "Focus granted");
+                                    } else {
+                                        Log.d("Position 0: ", "Close");
+                                    }
+                        }
+                    });
                 } else if(position==1){
                     setTitle("To: Me");
+                    rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+
+                            Rect r = new Rect();
+                            rootView.getWindowVisibleDisplayFrame(r);
+                            int screenHeight = rootView.getRootView().getHeight();
+
+                            int keypadHeight = screenHeight - r.bottom;
+
+                            Log.d("Main Activity 1:", "KeypadHeight = " + keypadHeight);
+
+                            if(keypadHeight > screenHeight * 0.15) {
+                                Log.d("Position 1: ", "Open");
+                                EditText editTextSecond = (EditText) findViewById(R.id.chat_box_second);
+                                editTextSecond.requestFocus();
+                                Log.d("Chat Box Second: ", "Focus granted");
+                            } else {
+                                Log.d("Position 1: ", "Close");
+                            }
+                        }
+                    });
                 }
             }
 
