@@ -55,11 +55,13 @@ public class FirstFragment extends Fragment {
            @Override
            public void onClick(View view) {
                String message = editText.getText().toString();
-               String user = ownerMe;
-               long unixTime = System.currentTimeMillis()/1000L;
-               Chat chat = new Chat(message, user, unixTime);
-               mChatViewModel.insert(chat);
-               editText.getText().clear();
+               if(!message.equals("")) {
+                   String user = ownerMe;
+                   long unixTime = System.currentTimeMillis() / 1000L;
+                   Chat chat = new Chat(message, user, unixTime);
+                   mChatViewModel.insert(chat);
+                   editText.getText().clear();
+               }
            }
        });
 

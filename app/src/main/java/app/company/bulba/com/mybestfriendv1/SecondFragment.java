@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -54,11 +55,14 @@ public class SecondFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String message = editText.getText().toString();
-                String user = ownerBF;
-                long unixTime = System.currentTimeMillis()/1000L;
-                Chat chat = new Chat(message, user, unixTime);
-                mChatViewModel.insert(chat);
-                editText.getText().clear();
+                Log.d("Message: ", message);
+                if(!message.equals("")) {
+                    String user = ownerBF;
+                    long unixTime = System.currentTimeMillis() / 1000L;
+                    Chat chat = new Chat(message, user, unixTime);
+                    mChatViewModel.insert(chat);
+                    editText.getText().clear();
+                }
             }
         });
 
