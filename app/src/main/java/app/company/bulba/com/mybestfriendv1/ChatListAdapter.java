@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -73,6 +75,7 @@ public class ChatListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (mChats != null) {
             Chat current = mChats.get(position);
+
             switch (holder.getItemViewType()) {
                 case VIEW_TYPE_MESSAGE_ME:
                     ((MeMessageHolder) holder).bind(current, false);
@@ -94,6 +97,7 @@ public class ChatListAdapter extends RecyclerView.Adapter {
         private final TextView chatItemView;
         private final ImageView cornerRightIImageView;
         private final ConstraintLayout constraintLayout;
+        private final TextView timeItemView;
 
 
         private MeMessageHolder(View itemView) {
@@ -101,11 +105,14 @@ public class ChatListAdapter extends RecyclerView.Adapter {
             chatItemView = itemView.findViewById(R.id.textView);
             cornerRightIImageView = itemView.findViewById(R.id.corner_view_right);
             constraintLayout = itemView.findViewById(R.id.chat_bubble_id);
+            timeItemView = itemView.findViewById(R.id.text_message_time);
 
         }
 
         void bind(Chat chat, boolean isCorner) {
             chatItemView.setText(chat.getMessage());
+            timeItemView.setText(chat.convertUnixTimeToString("h:mm a"));
+
             if(isCorner) {
                 constraintLayout.setBackgroundResource(R.drawable.chat_bubble_v2);
             } else {
@@ -118,16 +125,20 @@ public class ChatListAdapter extends RecyclerView.Adapter {
         private final TextView chatItemView;
         private final ImageView cornerLeftImageView;
         private final ConstraintLayout constraintLayout;
+        private final TextView timeItemView;
 
         private BfMessageHolder(View itemView) {
             super(itemView);
             chatItemView = itemView.findViewById(R.id.textView);
             cornerLeftImageView = itemView.findViewById(R.id.corner_view_left);
             constraintLayout = itemView.findViewById(R.id.chat_bubble_id);
+            timeItemView = itemView.findViewById(R.id.text_message_time);
         }
 
         void bind(Chat chat, boolean isCorner) {
             chatItemView.setText(chat.getMessage());
+            timeItemView.setText(chat.convertUnixTimeToString("h:mm a"));
+
             if(isCorner) {
                 constraintLayout.setBackgroundResource(R.drawable.chat_bubble_v3);
             } else {
