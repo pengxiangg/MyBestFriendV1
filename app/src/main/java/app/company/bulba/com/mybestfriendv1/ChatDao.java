@@ -2,6 +2,7 @@ package app.company.bulba.com.mybestfriendv1;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
@@ -22,4 +23,7 @@ public interface ChatDao {
 
     @Query("SELECT * from chat_table")
     LiveData<List<Chat>> getAllChats();
+
+    @Delete
+    void deleteChat(Chat chat);
 }

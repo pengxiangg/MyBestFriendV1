@@ -29,6 +29,8 @@ public class ChatRepository {
         new insertAsyncTask(mChatDao).execute(chat);
     }
 
+    public void deleteChat(Chat chat) {new deleteAsyncTask(mChatDao).execute(chat);}
+
     private static class insertAsyncTask extends AsyncTask<Chat, Void, Void> {
         private ChatDao mAsyncTaskDao;
 
@@ -39,6 +41,18 @@ public class ChatRepository {
         @Override
         protected Void doInBackground(Chat... chats) {
             mAsyncTaskDao.insert(chats[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Chat, Void, Void> {
+        private ChatDao mAsyncTaskDao;
+
+        deleteAsyncTask(ChatDao dao) { mAsyncTaskDao = dao; }
+
+        @Override
+        protected Void doInBackground(Chat... chats) {
+            mAsyncTaskDao.deleteChat(chats[0]);
             return null;
         }
     }

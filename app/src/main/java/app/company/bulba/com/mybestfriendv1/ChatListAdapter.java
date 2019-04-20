@@ -3,14 +3,21 @@ package app.company.bulba.com.mybestfriendv1;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +30,8 @@ public class ChatListAdapter extends RecyclerView.Adapter {
 
     private final LayoutInflater mInflater;
     private List<Chat> mChats;
+    private boolean multiSelect = false;
+    private List<Chat> selectedChats = new ArrayList<Chat>();
     private final String ownerMe = "OWNER_ME";
     private static final int VIEW_TYPE_MESSAGE_ME = 1;
     private static final int VIEW_TYPE_MESSAGE_ME_CORNER = 2;
@@ -95,17 +104,19 @@ public class ChatListAdapter extends RecyclerView.Adapter {
 
     class MeMessageHolder extends RecyclerView.ViewHolder {
         private final TextView chatItemView;
-        private final ImageView cornerRightIImageView;
+        private final ImageView cornerRightImageView;
         private final ConstraintLayout constraintLayout;
         private final TextView timeItemView;
 
 
-        private MeMessageHolder(View itemView) {
+
+        private MeMessageHolder(final View itemView) {
             super(itemView);
             chatItemView = itemView.findViewById(R.id.textView);
-            cornerRightIImageView = itemView.findViewById(R.id.corner_view_right);
+            cornerRightImageView = itemView.findViewById(R.id.corner_view_right);
             constraintLayout = itemView.findViewById(R.id.chat_bubble_id);
             timeItemView = itemView.findViewById(R.id.text_message_time);
+
 
         }
 
@@ -116,9 +127,11 @@ public class ChatListAdapter extends RecyclerView.Adapter {
             if(isCorner) {
                 constraintLayout.setBackgroundResource(R.drawable.chat_bubble_v2);
             } else {
-                cornerRightIImageView.setVisibility(View.INVISIBLE);
+                cornerRightImageView.setVisibility(View.INVISIBLE);
             }
         }
+
+
     }
 
     class BfMessageHolder extends RecyclerView.ViewHolder {
@@ -157,5 +170,9 @@ public class ChatListAdapter extends RecyclerView.Adapter {
         if(mChats!=null)
             return mChats.size();
         else return 0;
+    }
+
+    public Chat getChatAtPosition (int position) {
+        return mChats.get(position);
     }
 }

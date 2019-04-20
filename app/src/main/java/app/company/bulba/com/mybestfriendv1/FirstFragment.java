@@ -56,9 +56,8 @@ public class FirstFragment extends Fragment {
            public void onClick(View view) {
                String message = editText.getText().toString();
                if(!message.equals("")) {
-                   String user = ownerMe;
                    long unixTime = System.currentTimeMillis() / 1000L;
-                   Chat chat = new Chat(message, user, unixTime);
+                   Chat chat = new Chat(message, ownerMe, unixTime);
                    mChatViewModel.insert(chat);
                    editText.getText().clear();
                }
@@ -98,17 +97,7 @@ public class FirstFragment extends Fragment {
        return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("First Fragment", "Resume" );
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("First Fragment", "Pause");
-    }
 
 
 }

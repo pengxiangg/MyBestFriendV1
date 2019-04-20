@@ -25,4 +25,5 @@ public class ChatViewModel extends AndroidViewModel {
 
     LiveData<List<Chat>> getAllChats() {return mAllChats;}
     public void insert(Chat chat) {mRepository.insert(chat);}
+    public void deleteChat(Chat chat) {mRepository.deleteChat(chat);}
 }
