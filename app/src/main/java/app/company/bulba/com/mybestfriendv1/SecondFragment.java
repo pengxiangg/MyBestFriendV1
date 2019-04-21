@@ -21,7 +21,7 @@ import java.util.List;
  * Created by Zachary on 06/04/2019.
  */
 
-public class SecondFragment extends Fragment {
+public class SecondFragment extends Fragment implements ChatListAdapter.OnDeleteButtonClickListener {
 
     private ChatViewModel mChatViewModel;
     private boolean isLastItem = false;
@@ -33,7 +33,7 @@ public class SecondFragment extends Fragment {
         View view = inflater.inflate(R.layout.second_fragment, container, false);
 
         final RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        final ChatListAdapter adapter = new ChatListAdapter(getContext());
+        final ChatListAdapter adapter = new ChatListAdapter(getContext(), this);
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -99,4 +99,8 @@ public class SecondFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDeleteButtonClicked(Chat chat) {
+        mChatViewModel.deleteChat(chat);
+    }
 }

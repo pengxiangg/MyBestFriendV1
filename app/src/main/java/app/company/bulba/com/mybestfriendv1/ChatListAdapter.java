@@ -2,6 +2,7 @@ package app.company.bulba.com.mybestfriendv1;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -37,8 +38,48 @@ public class ChatListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_ME_CORNER = 2;
     private static final int VIEW_TYPE_MESSAGE_BF = 3;
     private static final int VIEW_TYPE_MESSAGE_BF_CORNER = 4;
+    private OnDeleteButtonClickListener onDeleteButtonClickListener;
 
-    ChatListAdapter(Context context) {mInflater = LayoutInflater.from(context);}
+    ChatListAdapter(Context context, OnDeleteButtonClickListener listener) {
+        mInflater = LayoutInflater.from(context);
+        this.onDeleteButtonClickListener = listener;
+    }
+
+    public interface OnDeleteButtonClickListener{
+        void onDeleteButtonClicked(Chat chat);
+    }
+
+    private ActionMode.Callback actionModeCallbacks = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            multiSelect = true;
+            menu.add("Delete");
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            for(Chat chat : selectedChats){
+                if(onDeleteButtonClickListener!=null){
+                    onDeleteButtonClickListener.onDeleteButtonClicked(chat);
+                }
+            }
+            mode.finish();
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            multiSelect = false;
+            selectedChats.clear();
+            notifyDataSetChanged();
+        }
+    };
 
     @Override
     public int getItemViewType(int position) {
@@ -106,6 +147,7 @@ public class ChatListAdapter extends RecyclerView.Adapter {
         private final TextView chatItemView;
         private final ImageView cornerRightImageView;
         private final ConstraintLayout constraintLayout;
+        private final ConstraintLayout fullRow;
         private final TextView timeItemView;
 
 
@@ -116,11 +158,11 @@ public class ChatListAdapter extends RecyclerView.Adapter {
             cornerRightImageView = itemView.findViewById(R.id.corner_view_right);
             constraintLayout = itemView.findViewById(R.id.chat_bubble_id);
             timeItemView = itemView.findViewById(R.id.text_message_time);
-
+            fullRow = itemView.findViewById(R.id.right_full);
 
         }
 
-        void bind(Chat chat, boolean isCorner) {
+        void bind(final Chat chat, boolean isCorner) {
             chatItemView.setText(chat.getMessage());
             timeItemView.setText(chat.convertUnixTimeToString("h:mm a"));
 
@@ -128,6 +170,32 @@ public class ChatListAdapter extends RecyclerView.Adapter {
                 constraintLayout.setBackgroundResource(R.drawable.chat_bubble_v2);
             } else {
                 cornerRightImageView.setVisibility(View.INVISIBLE);
+            }
+
+            if(selectedChats.contains(chat)) {
+                fullRow.setBackgroundColor(Color.LTGRAY);
+            } else {
+                fullRow.setBackgroundColor(Color.TRANSPARENT);
+            }
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    ((AppCompatActivity)view.getContext()).startSupportActionMode(actionModeCallbacks);
+                    selectChat(chat);
+                    return true;
+                }
+            });
+        }
+
+        void selectChat(Chat chat) {
+            if(multiSelect) {
+                if(selectedChats.contains(chat)){
+                    selectedChats.remove(chat);
+                    fullRow.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    selectedChats.add(chat);
+                    fullRow.setBackgroundColor(Color.LTGRAY);
+                }
             }
         }
 
