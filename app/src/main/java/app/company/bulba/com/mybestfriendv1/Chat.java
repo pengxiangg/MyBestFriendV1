@@ -53,6 +53,16 @@ public class Chat {
         return sdf.format(time);
     }
 
+    public String convertUnixTimeToDate(String format) {
+        if(format == null) {
+            format = "dd MMMM yyyy";
+        }
+
+        Date date = new java.util.Date(mUnixTime*1000L);
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat(format);
+        return sdf.format(date);
+    }
+
 
 
 }
