@@ -207,6 +207,7 @@ public class ChatListAdapter extends RecyclerView.Adapter {
         private final ImageView cornerLeftImageView;
         private final ConstraintLayout constraintLayout;
         private final TextView timeItemView;
+        private final ConstraintLayout fullRow;
 
         private BfMessageHolder(View itemView) {
             super(itemView);
@@ -214,9 +215,10 @@ public class ChatListAdapter extends RecyclerView.Adapter {
             cornerLeftImageView = itemView.findViewById(R.id.corner_view_left);
             constraintLayout = itemView.findViewById(R.id.chat_bubble_id);
             timeItemView = itemView.findViewById(R.id.text_message_time);
+            fullRow = itemView.findViewById(R.id.left_full);
         }
 
-        void bind(Chat chat, boolean isCorner) {
+        void bind(final Chat chat, boolean isCorner) {
             chatItemView.setText(chat.getMessage());
             timeItemView.setText(chat.convertUnixTimeToString("h:mm a"));
 
@@ -225,8 +227,35 @@ public class ChatListAdapter extends RecyclerView.Adapter {
             } else {
                 cornerLeftImageView.setVisibility(View.INVISIBLE);
             }
+
+            if(selectedChats.contains(chat)) {
+                fullRow.setBackgroundColor(Color.LTGRAY);
+            } else {
+                fullRow.setBackgroundColor(Color.TRANSPARENT);
+            }
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    ((AppCompatActivity)view.getContext()).startSupportActionMode(actionModeCallbacks);
+                    selectChat(chat);
+                    return true;
+                }
+            });
         }
-    }
+
+        void selectChat(Chat chat) {
+            if(multiSelect) {
+                if(selectedChats.contains(chat)){
+                    selectedChats.remove(chat);
+                    fullRow.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    selectedChats.add(chat);
+                    fullRow.setBackgroundColor(Color.LTGRAY);
+                }
+            }
+        }
+        }
+
 
     void setChats(List<Chat> chats) {
         mChats = chats;
