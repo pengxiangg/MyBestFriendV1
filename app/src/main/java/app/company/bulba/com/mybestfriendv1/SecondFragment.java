@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class SecondFragment extends Fragment implements ChatListAdapter.OnDelete
 
         final EditText editText = (EditText) view.findViewById(R.id.chat_box_second);
 
-        Button button = (Button) view.findViewById(R.id.send_button);
+        ImageButton button = (ImageButton) view.findViewById(R.id.send_button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

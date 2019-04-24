@@ -2,6 +2,7 @@ package app.company.bulba.com.mybestfriendv1;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -49,7 +51,7 @@ public class FirstFragment extends Fragment implements ChatListAdapter.OnDeleteB
 
        final EditText editText = (EditText) view.findViewById(R.id.chat_box_first);
 
-       Button button = (Button) view.findViewById(R.id.send_button);
+       ImageButton button = (ImageButton) view.findViewById(R.id.send_button);
 
        button.setOnClickListener(new View.OnClickListener() {
            @Override

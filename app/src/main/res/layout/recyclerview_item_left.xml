@@ -13,9 +13,10 @@
         android:layout_height="wrap_content"
         android:text="5 APRIL 2019"
         android:layout_gravity="center"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
-        android:id="@+id/date_view"/>
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:id="@+id/date_view"
+        android:textColor="#EDEDED"/>
 
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
@@ -36,7 +37,7 @@
         android:id="@+id/chat_bubble_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/chat_bubble"
+        android:background="@drawable/chat_bubble_left"
         app:layout_constraintStart_toEndOf="@+id/corner_view_left"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -50,7 +51,7 @@
             android:paddingRight="7dp"
             android:maxWidth="240dp"
             android:text="afffffgff"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textSize="18sp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -63,6 +64,7 @@
             android:layout_marginBottom="2dp"
             android:text="11:40 pm"
             android:textSize="10sp"
+            android:textColor="#EDEDED"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/textView"
