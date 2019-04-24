@@ -54,7 +54,7 @@ public class FirstFragment extends Fragment implements ChatListAdapter.OnDeleteB
        button.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               String message = editText.getText().toString();
+               String message = editText.getText().toString().trim();
                if(!message.equals("")) {
                    long unixTime = System.currentTimeMillis() / 1000L;
                    Chat chat = new Chat(message, ownerMe, unixTime);

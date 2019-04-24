@@ -54,7 +54,7 @@ public class SecondFragment extends Fragment implements ChatListAdapter.OnDelete
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = editText.getText().toString();
+                String message = editText.getText().toString().trim();
                 Log.d("Message: ", message);
                 if(!message.equals("")) {
                     String user = ownerBF;
