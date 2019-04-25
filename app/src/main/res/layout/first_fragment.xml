@@ -32,13 +32,14 @@
             android:layout_margin="4dp"
             android:layout_toStartOf="@+id/send_button"
             android:background="@drawable/rounded_edittext"
-            android:inputType="textMultiLine"
+            android:inputType="textMultiLine|textCapSentences"
             android:maxLines="4"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textColor="@android:color/white"
             android:hint="Enter Message"
-            android:textColorHint="#737373" />
+            android:textColorHint="#737373"
+            android:textSize="16sp"/>
 
         <ImageButton
             android:id="@+id/send_button"
