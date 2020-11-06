@@ -10,5 +10,5 @@ This app aims to be somewhat similar to cognitive behavioral therapy which focus
 distortions and behaviors, improving emotional regulation, and the development of personal coping strategies that target solving current 
 problems. 
 
-This tbrough the stimulation of a messaging app that allows the user to pretend that they are talking to their friends, but in reality,
+This through the stimulation of a messaging app that allows the user to pretend that they are talking to their friends, but in reality,
 are talking to themselves.
