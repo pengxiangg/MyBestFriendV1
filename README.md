@@ -1,6 +1,6 @@
 # MyBestFriendV1
 
-![](https://im6.ezgif.com/tmp/ezgif-6-8e2fa7ecb89f.gif)
+![image](https://user-images.githubusercontent.com/44940859/111654728-fafcf400-8843-11eb-9a54-aad67f2cf7ff.png)
 
 This is an android app that allows you to talk to yourself. This is inspired from the saying of being your own best friend. 
 This can app can function as a diary, or as a tool to talk and treat yourself with love and care.
